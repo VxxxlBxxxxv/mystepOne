@@ -1,5 +1,7 @@
 
+import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
+import org.junit.Assert;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -8,6 +10,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import java.net.URL;
 
 import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selectors.byAttribute;
 import static com.codeborne.selenide.Selectors.byCssSelector;
 import static com.codeborne.selenide.Selectors.byXpath;
 import static com.codeborne.selenide.Selenide.*;
@@ -28,7 +31,7 @@ public class SampleSauceTest {
         WebDriver driver = new RemoteWebDriver(new URL(URL), caps);
         WebDriverRunner.setWebDriver(driver);
 
-
+//тестируем создание нового элемента
         open("http://samples.gwtproject.org/samples/Showcase/Showcase.html#!CwCellList");
         $(byCssSelector(".middleCenterInner > div:nth-child(1) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(2) > td:nth-child(2) > input:nth-child(1)")).setValue("John");
         $(byCssSelector(".middleCenterInner > div:nth-child(1) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(3) > td:nth-child(2) > input:nth-child(1)")).setValue("Wayne");
@@ -42,14 +45,14 @@ public class SampleSauceTest {
         $("div.GNHGC04CCB:nth-child(251)").shouldHave(text("31546 Olive-Tree Heaven"));
 
 
-
+//тестируем работу кнопки "Создать +50"
         open("http://samples.gwtproject.org/samples/Showcase/Showcase.html#!CwCellList");
         $("button.gwt-Button:nth-child(3)").click();
         $("div.GNHGC04CCB:nth-child(1)").sendKeys(Keys.chord(Keys.END));
         $("div.GNHGC04CCB:nth-child(300)").exists();
         $("#gwt-debug-contentPanel > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1) > div:nth-child(2)").shouldHave(text("300"));
 
-
+//тестируем редактирование
         open("http://samples.gwtproject.org/samples/Showcase/Showcase.html#!CwCellList");
         $("div.GNHGC04CCB:nth-child(1)").click();
         $(byCssSelector(".middleCenterInner > div:nth-child(1) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(2) > td:nth-child(2) > input:nth-child(1)")).setValue("John");
@@ -62,7 +65,7 @@ public class SampleSauceTest {
 
 
 
-
+//тестируем Недобавление пустой записи
         open("http://samples.gwtproject.org/samples/Showcase/Showcase.html#!CwCellList");
         $(byCssSelector(".middleCenterInner > div:nth-child(1) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(2) > td:nth-child(2) > input:nth-child(1)")).setValue(" ");
         $(byCssSelector(".middleCenterInner > div:nth-child(1) > table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(3) > td:nth-child(2) > input:nth-child(1)")).setValue(" ");
@@ -116,7 +119,19 @@ public class SampleSauceTest {
         $(byCssSelector("td.GNHGC04CLH:nth-child(1) > img:nth-child(1)")).click();
         $(byCssSelector("tr.GNHGC04CBD:nth-child(1) > td:nth-child(1) > div:nth-child(1) > input:nth-child(1)")).isSelected();
 
-//
+// тестируем сортировку
+        open("http://samples.gwtproject.org/samples/Showcase/Showcase.html#!CwCellTable");
+        $(byCssSelector("th.GNHGC04CHD:nth-child(2)")).click();
+        String txt1,txt2;
+        $(byCssSelector("tr.GNHGC04CBD:nth-child(1) > td:nth-child(2) > div:nth-child(1)")).doubleClick();
+        txt1 = $(byCssSelector("tr.GNHGC04CBD:nth-child(1) > td:nth-child(2) > div:nth-child(1)")).$(byXpath("./input")).getValue();
+        $(byCssSelector("tr.GNHGC04CBD:nth-child(1) > td:nth-child(2) > div:nth-child(1)")).pressEscape();
+        $(byCssSelector("tr.GNHGC04CBE:nth-child(4) > td:nth-child(2) > div:nth-child(1)")).doubleClick();
+        txt2 = $(byCssSelector("tr.GNHGC04CBE:nth-child(4) > td:nth-child(2) > div:nth-child(1)")).$(byXpath("./input")).getValue();
+        int res = 0;
+        res =  txt1.compareTo(txt2);
+        if (res >0) Assert.fail();
+
 
         driver.quit();
 
