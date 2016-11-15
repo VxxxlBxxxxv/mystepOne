@@ -88,14 +88,14 @@ public class SampleSauceTest {
 
 
 
-//тестируем переход по страницам
+//тестируем переходы по страницам
         open("http://samples.gwtproject.org/samples/Showcase/Showcase.html#!CwCellTable");
-//вперед
+        //вперед
         $(byCssSelector("td.GNHGC04CLH:nth-child(4) > img:nth-child(1)")).click();
         $(byCssSelector("div.gwt-HTML:nth-child(1)")).shouldHave(text("16-30 of 250"));
         $(byCssSelector("td.GNHGC04CLH:nth-child(5) > img:nth-child(1)")).click();
         $(byCssSelector("div.gwt-HTML:nth-child(1)")).shouldHave(text("241-250 of 250"));
-//назад
+        //назад
         $(byCssSelector("td.GNHGC04CLH:nth-child(2) > img:nth-child(1)")).click();
         $(byCssSelector("div.gwt-HTML:nth-child(1)")).shouldHave(text("226-240 of 250"));
         $(byCssSelector("td.GNHGC04CLH:nth-child(1) > img:nth-child(1)")).click();
@@ -106,8 +106,17 @@ public class SampleSauceTest {
         open("http://samples.gwtproject.org/samples/Showcase/Showcase.html#!CwCellTable");
         $(byCssSelector("th.GNHGC04CHD:nth-child(2)")).click();
         $(byCssSelector("tr.GNHGC04CBD:nth-child(1) > td:nth-child(1) > div:nth-child(1) > input:nth-child(1)")).click();
+        $(byCssSelector("th.GNHGC04CHD:nth-child(2)")).click();
+        $(byCssSelector("th.GNHGC04CHD:nth-child(2)")).click();
+        $(byCssSelector("tr.GNHGC04CBD:nth-child(1) > td:nth-child(1) > div:nth-child(1) > input:nth-child(1)")).isSelected();
+        $(byCssSelector("td.GNHGC04CLH:nth-child(4) > img:nth-child(1)")).click();
+        $(byCssSelector("td.GNHGC04CLH:nth-child(2) > img:nth-child(1)")).click();
+        $(byCssSelector("tr.GNHGC04CBD:nth-child(1) > td:nth-child(1) > div:nth-child(1) > input:nth-child(1)")).isSelected();
+        $(byCssSelector("td.GNHGC04CLH:nth-child(5) > img:nth-child(1)")).click();
+        $(byCssSelector("td.GNHGC04CLH:nth-child(1) > img:nth-child(1)")).click();
+        $(byCssSelector("tr.GNHGC04CBD:nth-child(1) > td:nth-child(1) > div:nth-child(1) > input:nth-child(1)")).isSelected();
 
-
+//
 
         driver.quit();
 
